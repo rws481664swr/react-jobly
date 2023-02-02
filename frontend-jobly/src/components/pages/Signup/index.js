@@ -1,11 +1,11 @@
 import './Signup.css'
-import LabeledInput from "../../util/LabeledInput";
-import useForm from "../../../hooks/useForm";
+import LabeledInput from "../auth/LabeledInput";
 import FormWrapper from "../auth/FormWrapper";
 import {signup} from "../../../api/auth";
-import {useContext, useEffect, useState} from "react";
-import GlobalContext from "../../../context";
-import {useHistory} from "react-router-dom";
+import FormButton from "../auth/FormButton";
+import useAuthForm from "../../../hooks/useOnPostForm";
+import {useState} from "react";
+import JoblyApi from "../../../JoblyApi";
 
 
 const initForm = {
@@ -26,32 +26,17 @@ const validate = (form) => {
     return true
 }
 
-const Signup = () => {
-    const history = useHistory()
-    const {setToken, setUser} = useContext(GlobalContext)
-    const [form, onChange, clear] = useForm(initForm)
-    const [msg,flash]=useState('')
-    const onSubmit = async (e) => {
-        e.preventDefault()
-flash('')
-        if (!validate(form)) return
 
-        try {
-            const {token} = await signup(form)
-            setUser(form.username)
-            setToken(token.token)
-            console.log(token.token)
-            clear()
-            history.push('/')
-        } catch ({response: {data,status},code,message}) {
-            console.log(data,code,message);
-            flash(data.message)
-        }
 
-    }
+const Signup = (props) => {
+    const [message,flash]=useState('')
+
+        const [form,onChange,clear,onClick]=useAuthForm(initForm,JoblyApi.signup,flash)
+
     return <FormWrapper>
         <h1>Sign Up!</h1>
-        {msg&& <div className={'text-danger'}>{msg}</div>}
+
+        {message && <div className={'text-danger'}>{message}</div>}
         <form>
             <LabeledInput
                 id={'signup-form-username'}
@@ -91,7 +76,7 @@ flash('')
                 name={'email'}
             />
         </form>
-        <button onClick={onSubmit} className={'btn btn-primary w-100'} type="submit">Register</button>
+        <FormButton onClick={onClick} text={'Register'}/>
     </FormWrapper>
 }
 export default Signup

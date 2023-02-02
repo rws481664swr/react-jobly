@@ -1,16 +1,14 @@
-import './App.css';
-import {GlobalContextProvider} from "./context";
 import NavBar from './components/navigation/Navbar'
-import Routes from './components/navigation/Routes'
+import AppRoutes from './components/navigation/Routes'
+import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootswatch/dist/journal/bootstrap.min.css'
+import './App.css';
 
-function App() {
-    return (
-
-        <div className="App">
-            <NavBar/>
-            <Routes/>
-        </div>
-    );
-}
+const App = () =>
+    <div className="App">
+        <NavBar/>
+        <AppRoutes/>
+    </div>
 
 export default App;

@@ -1,8 +1,8 @@
 import {createContext, useState} from "react";
 import useLocalStorageState from "../hooks/useLocalStorageState";
 
-const _default = {}
-const GlobalContext = createContext(_default)
+const _default = {user:null,setUser:(e)=>e,token:null,setToken:e=>e}
+const GlobalContext = createContext({})
 export default GlobalContext
 export const GlobalContextProvider = ({children}) => {
     const [user,setUser]=useLocalStorageState('user','')

@@ -1,35 +1,22 @@
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import Signup from "../../pages/Signup";
 import Login from "../../pages/Login";
 import Jobs from "../../pages/Jobs";
 import Companies from "../../pages/Companies";
 import Profile from "../../pages/Profile/index.js";
-import 'bootstrap/dist/css/bootstrap.min.css'
-const Routes = () =><>
+import Home from "../../Home";
 
-    <Switch>
-        <Route exact path={'/'}>
+const AppRoutes = () =>
 
-        </Route>
-        <Route exact path={'/companies'}>
-            <Companies/>
+    <Routes>
+        <Route path={'/'} element={<Home/>}/>
+        <Route path={'/companies'} element={<Companies/>}/>
+        <Route path={'/jobs'} element={<Jobs/>}/>
+        <Route path={'/login'} element={<Login/>}/>
+        <Route path={'/signup'} element={<Signup/>}/>
+        <Route path={'/profile'} element={<Profile/>}/>
+        <Route path="*" element={<Navigate to="/" replace/>}/>
+    </Routes>
 
-        </Route>
-        <Route exact path={'/jobs'}>
-            <Jobs/>
 
-        </Route>
-        <Route exact path={'/login'}>
-            <Login/>
-        </Route>
-        <Route exact path={'/signup'}>
-            <Signup/>
-        </Route>
-        <Route exact path={'/profile'}>
-            <Profile/>
-        </Route>
-        <Redirect to={'/'}/>
-    </Switch>
-</>
-
-export default Routes
+export default AppRoutes
