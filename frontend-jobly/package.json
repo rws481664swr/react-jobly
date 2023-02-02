@@ -11,7 +11,7 @@
     "bootswatch": "^5.2.3",
     "react": "*",
     "react-dom": "*",
-    "react-router-dom": "5.2.1",
+    "react-router-dom": "^6.8.0",
     "react-scripts": "*",
     "reactstrap": "*",
     "web-vitals": "*"
