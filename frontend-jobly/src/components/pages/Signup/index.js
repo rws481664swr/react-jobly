@@ -1,11 +1,15 @@
 import './Signup.css'
-import LabeledInput from "../auth/LabeledInput";
-import FormWrapper from "../auth/FormWrapper";
+import LabeledInput from "../../util/auth/LabeledInput";
+import FormWrapper from "../../util/auth/FormWrapper";
 import {signup} from "../../../api/auth";
-import FormButton from "../auth/FormButton";
-import useAuthForm from "../../../hooks/useOnPostForm";
+import FormButton from "../../util/auth/FormButton";
+import useAuthForm from "../../../hooks/forms/useOnPostForm";
 import {useState} from "react";
 import JoblyApi from "../../../JoblyApi";
+import UserDetailsForm from "../../navigation/forms/UserDetailsForm";
+import Job from "../Job";
+
+
 
 
 const initForm = {
@@ -15,68 +19,14 @@ const initForm = {
     password: '',
     email: '',
 }
-const validate = (form) => {
-    const {username, firstName, lastName, password, email} = form
-    if (username.length < 3) return
-    if (lastName.length < 2) return
-    if (firstName.length < 2) return
-    // if ( password.length < 8 )return
-    if (!password) return
-    if (email.length < 4) return
-    return true
-}
-
-
 
 const Signup = (props) => {
     const [message,flash]=useState('')
-
-        const [form,onChange,clear,onClick]=useAuthForm(initForm,JoblyApi.signup,flash)
+    const formHook=useAuthForm(initForm,JoblyApi.signup,flash)
 
     return <FormWrapper>
         <h1>Sign Up!</h1>
-
-        {message && <div className={'text-danger'}>{message}</div>}
-        <form>
-            <LabeledInput
-                id={'signup-form-username'}
-                onChange={onChange}
-                value={form.username}
-                label={'Username'}
-                name={'username'}
-            />
-            <LabeledInput
-                id={'signup-form-password'}
-                onChange={onChange}
-                value={form.password}
-                label={'Password'}
-                name={'password'}
-                type={'password'}
-            />
-            <LabeledInput
-                id={'signup-form-firstName'}
-                onChange={onChange}
-                value={form.firstName}
-                label={'First Name'}
-                name={'firstName'}
-            />
-            <LabeledInput
-                id={'signup-form-lastName'}
-                onChange={onChange}
-                value={form.lastName}
-                label={'Last Name'}
-                name={'lastName'}
-            />
-            <LabeledInput
-                id={'signup-form-email'}
-                onChange={onChange}
-                value={form.email}
-                label={'Email'}
-                type={'email'}
-                name={'email'}
-            />
-        </form>
-        <FormButton onClick={onClick} text={'Register'}/>
+        <UserDetailsForm formHook={formHook} message={message}  onPost={JoblyApi.signup}/>
     </FormWrapper>
 }
 export default Signup

@@ -1,0 +1,6 @@
+#job-filters-form label{
+    margin: 8px 4px 8px 4px;
+}
+#job-filters-form input[type="checkbox"]{
+    margin: 8px 4px 8px 4px;
+}

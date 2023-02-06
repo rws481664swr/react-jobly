@@ -1,8 +1,8 @@
 import './Login.css'
-import FormWrapper from "../auth/FormWrapper";
-import LabeledInput from "../auth/LabeledInput";
-import FormButton from "../auth/FormButton";
-import useOnPostForm from "../../../hooks/useOnPostForm";
+import FormWrapper from "../../util/auth/FormWrapper";
+import LabeledInput from "../../util/auth/LabeledInput";
+import FormButton from "../../util/auth/FormButton";
+import useOnPostForm from "../../../hooks/forms/useOnPostForm";
 import {useState} from "react";
 import JoblyApi from "../../../JoblyApi";
 

@@ -54,6 +54,12 @@ class JoblyApi {
     // Individual API routes
 
 
+    /** get user by username */
+    static async getUser(username) {
+        let res = await JoblyApi.request(`users/${username}`);
+        console.warn(res)
+        return res.user;
+    }
     /** get all jobs */
     static async getJobs(query={}) {
         let res = await JoblyApi.request(`jobs`, query);

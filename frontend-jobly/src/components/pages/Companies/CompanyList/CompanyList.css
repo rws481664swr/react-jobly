@@ -1,0 +1,37 @@
+.CompanyListItem__card {
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0px 2px 10px #999;
+
+}
+
+.CompanyListItem__header {
+    font-weight: bold;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.CompanyListItem__img {
+    font-size: .7rem;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.CompanyListItem__body {
+    font-size: .9rem;
+    padding: 2px;
+    padding-top: 5px;
+}
+
+.CompanyListItem__link {
+}
+
+.CompanyListItem__employees {
+}
+
+.CompanyListItem__description {
+}

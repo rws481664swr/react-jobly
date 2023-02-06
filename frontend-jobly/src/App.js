@@ -5,10 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootswatch/dist/journal/bootstrap.min.css'
 import './App.css';
 
-const App = () =>
-    <div className="App">
+const App = () => {
+    return <div className="App">
         <NavBar/>
         <AppRoutes/>
     </div>
-
+}
 export default App;

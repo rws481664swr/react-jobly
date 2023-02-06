@@ -1,0 +1,5 @@
+.CompanyItem{
+    padding :40px;
+}
+.CompanyItem__description{}
+.CompanyItem__description p{text-wrap: normal}

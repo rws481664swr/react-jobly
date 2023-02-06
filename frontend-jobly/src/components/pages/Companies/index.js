@@ -1,30 +1,18 @@
 import './Companies.css'
-import {useEffect, useState} from "react";
 import JoblyApi from "../../../JoblyApi";
+import useAxiosGet from '../../../hooks/ajax/useAxiosGet'
+import CompanyList from "./CompanyList";
+import CompanyFilters from "../../filters/CompanyFilters";
 
-const useAxiosGet = (func, args) => {
-    const [state, setState] = useState(null)
-    useEffect(() => {
-        (async () => {
-            const data = await func(args)
-            setState(data)
-        })()
-    }, [args])
-    return state
-}
-
-const Company = ({company: {handle, numEmployees, description, logoUrl, name}}) =>
-    <div>{name}</div>
-const CompanyList = ({companies}) =>
-    <>
-        {companies && companies.map(company => <Company key={company.handle} company={company}/>)}
-    </>
 
 const Companies = () => {
-    const [filters, setFilters] = useState({})
-    const companies = useAxiosGet(JoblyApi.getCompanies, filters)
-    return <div>
+    const [companies, setQuery] = useAxiosGet(JoblyApi.getCompanies)
+    return <>
+        <CompanyFilters setQuery={setQuery}/>
+
         <CompanyList companies={companies}/>
-    </div>
+    </>
+
+
 }
 export default Companies

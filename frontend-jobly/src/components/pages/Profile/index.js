@@ -1,3 +1,8 @@
 import './Profile.css'
-const Profile=()=><></>
+import {ListWrapper} from "../../util/HelperDivs";
+const Profile=()=><>
+<ListWrapper>
+
+</ListWrapper>
+</>
 export default Profile
