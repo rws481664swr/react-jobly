@@ -1,28 +1,14 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import GlobalContext from "../../../context/GlobalContext";
-import {
-    Navbar,
-    NavItem,
-    Nav,
-    Collapse,
-    NavbarToggler,
-    NavbarBrand,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
-} from 'reactstrap'
-import useToggle from '../../../hooks/state/useToggle'
-import useClassList from "../../../hooks/state/useClassList";
 
 const NavBar = ({}) => {
     const navigate = useNavigate()
     const {
-        setToken, setUser, token, isAdmin
+        setToken, setUser, token, isAdmin,clear
     } = useContext(GlobalContext)
     const onLogout = () => {
-        setToken(null)
-        setUser('')
+        clear()
         navigate('/login')
     }
     return <>

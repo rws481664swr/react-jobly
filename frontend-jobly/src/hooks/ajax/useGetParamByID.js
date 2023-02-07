@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-const useGetByID = (func, id) => {
+const useGetParamByID = (func, id) => {
     const {[id]: _id} = useParams()
     console.log('get by '+ id)
     const [comp, setCompany] = useState(null)
@@ -13,4 +13,4 @@ const useGetByID = (func, id) => {
     }, [func, id])
     return comp
 }
-export default  useGetByID
+export default  useGetParamByID

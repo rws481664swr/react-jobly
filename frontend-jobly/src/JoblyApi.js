@@ -13,6 +13,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 class JoblyApi {
     // the token for interactive with the API will be stored here.
     static token;
+
     static async auth(body,action){
         try {
             const{token}= (await axios.post(`${BASE_URL}/auth/${action}`, body)).data
@@ -30,7 +31,11 @@ class JoblyApi {
     static async signup(body) {
        return await JoblyApi.auth(body,'register')
     }
-
+    static async updateUser(username,body){
+        console.log('update',username,body)
+        const response= await JoblyApi.request(`users/${username}`,body,'patch')
+        return response.user;
+    };
     static async request(endpoint, data = {}, method = "get") {
         console.debug("API Call:", endpoint, data, method);
 

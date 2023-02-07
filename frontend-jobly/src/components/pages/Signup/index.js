@@ -1,32 +1,44 @@
 import './Signup.css'
-import LabeledInput from "../../util/auth/LabeledInput";
 import FormWrapper from "../../util/auth/FormWrapper";
-import {signup} from "../../../api/auth";
-import FormButton from "../../util/auth/FormButton";
-import useAuthForm from "../../../hooks/forms/useOnPostForm";
-import {useState} from "react";
+import UserDetailsForm from "../../forms/UserDetailsForm";
+import {useFlash} from "../../../hooks/forms/useOnPostForm";
 import JoblyApi from "../../../JoblyApi";
-import UserDetailsForm from "../../navigation/forms/UserDetailsForm";
-import Job from "../Job";
+import useForm from "../../../hooks/forms/useForm";
+import {useNavigate} from "react-router-dom";
+import FlashComponent from "../../util/FlashComponent";
+import useGlobalContext from "../../../hooks/state/useGlobalContext";
 
-
-
-
-const initForm = {
+const init={
     username: '',
     firstName: '',
     lastName: '',
     password: '',
     email: '',
 }
-
 const Signup = (props) => {
-    const [message,flash]=useState('')
-    const formHook=useAuthForm(initForm,JoblyApi.signup,flash)
-
+    const form = useForm(init)
+    const[message,flash]=useFlash()
+    const navigate=useNavigate()
+    const {setToken}= useGlobalContext()
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const token = await JoblyApi.signup(form)
+            setToken(token)
+            navigate('/')
+        } catch (err) {
+            console.log(err)
+            flash(err )
+        }
+    }
     return <FormWrapper>
         <h1>Sign Up!</h1>
-        <UserDetailsForm formHook={formHook} message={message}  onPost={JoblyApi.signup}/>
+        <FlashComponent message={message}/>
+        <UserDetailsForm lockUsername={false}
+                         form={form}
+                         buttonText={'Register'}
+                         onSubmit={onSubmit}
+        />
     </FormWrapper>
 }
 export default Signup

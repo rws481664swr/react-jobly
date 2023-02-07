@@ -6,7 +6,7 @@ import 'bootswatch/dist/journal/bootstrap.min.css'
 import './App.css';
 
 const App = () => {
-    return <div className="App">
+    return <div className="App">`
         <NavBar/>
         <AppRoutes/>
     </div>

@@ -1,16 +1,6 @@
-import {useState} from "react";
-import useAuthForm from "../../../hooks/forms/useOnPostForm";
-import LabeledInput from "../../util/auth/LabeledInput";
-import FormButton from "../../util/auth/FormButton";
+import LabeledInput from "../util/auth/LabeledInput";
+import FormButton from "../util/auth/FormButton";
 
-
-const initForm = {
-    username: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    email: '',
-}
 const validate = (form) => {
     const {username, firstName, lastName, password, email} = form
     if (username.length < 3) return
@@ -21,13 +11,13 @@ const validate = (form) => {
     if (email.length < 4) return
     return true
 }
-const UserDetailsForm = ({onPost,message,formHook:[form,onChange,clear,onClick]})=>{
 
+const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [form, onChange, clearForm]}) =>
+    <>
 
-    return <>
-        {message && <div className={'text-danger'}>{message}</div>}
-        <form>
-            <LabeledInput
+        <form onSubmit={e => e.preventDefault()}>
+            < LabeledInput
+                disabled={lockUsername}
                 id={'signup-form-username'}
                 onChange={onChange}
                 value={form.username}
@@ -64,8 +54,8 @@ const UserDetailsForm = ({onPost,message,formHook:[form,onChange,clear,onClick]}
                 type={'email'}
                 name={'email'}
             />
+            <FormButton onClick={onSubmit} text={buttonText}/>
         </form>
-        <FormButton onClick={onClick} text={'Register'}/>
     </>
-}
+
 export default UserDetailsForm

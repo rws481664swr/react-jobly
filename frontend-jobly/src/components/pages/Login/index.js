@@ -2,17 +2,19 @@ import './Login.css'
 import FormWrapper from "../../util/auth/FormWrapper";
 import LabeledInput from "../../util/auth/LabeledInput";
 import FormButton from "../../util/auth/FormButton";
-import useOnPostForm from "../../../hooks/forms/useOnPostForm";
-import {useState} from "react";
+import useOnPostForm, {useOnSubmitAuth} from "../../../hooks/forms/useOnPostForm";
 import JoblyApi from "../../../JoblyApi";
 
 const init={username:'',password:'' }
 const Login = ({...props})=> {
-    const [message,flash]=useState('')
-    const [form,onChange,, onSubmit]= useOnPostForm(init,JoblyApi.login,flash)
-
+    const [
+        [form,onChange,clear],
+        onSubmit,
+        message
+    ]=useOnPostForm(init,JoblyApi.login,useOnSubmitAuth)
     return <FormWrapper>
-        {message && <div className={'text-danger'}>{message}</div>}
+        {typeof message==='object'&& console.log(message)}
+        {typeof message!=='object' && <div className={'text-danger'}>{message}</div>}
         <form>
             <LabeledInput
                 id={'login-form-username'}

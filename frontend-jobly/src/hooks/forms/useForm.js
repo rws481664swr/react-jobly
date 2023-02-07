@@ -1,14 +1,16 @@
 import {useState} from "react";
 
 const useForm =(form)=>{
-    const[state,setState]=useState(form)
+    const[state,setState]=useState({...form})
     const onChange=(e)=>{
         const {target:{value,name}}=e
         setState(state=>({...state,[name]:value}))
     }
     const clear = ()=>setState(form)
-    return [state,onChange,clear]
+    return [state,onChange,clear,setState]
 }
+
+
 
 
 

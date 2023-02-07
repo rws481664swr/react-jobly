@@ -1,13 +1,9 @@
 import './Company.css'
-import {useParams} from "react-router-dom";
 import useAxiosGet from "../../../hooks/ajax/useAxiosGet";
 import JoblyApi from "../../../JoblyApi";
-import {useEffect, useState} from "react";
 import JobList from "../Jobs/JobList";
 import CompanyItem from './CompanyItem'
 import JobFilters from "../../filters/JobFilters";
-import {ListWrapper} from "../../util/HelperDivs";
-import useGetByID from "../../../hooks/ajax/useGetByID";
 
 
 const Company = ({...props}) => {
