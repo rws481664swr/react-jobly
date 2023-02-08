@@ -12,11 +12,18 @@ const validate = (form) => {
     return true
 }
 
-const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [form, onChange, clearForm]}) =>
-    <>
+const UserDetailsForm = ({
+                             className = '',
+                             lockUsername = false,
+                             buttonText,
+                             onSubmit,
+                             form: [form, onChange, clearForm]
+                         }) =>
+    <div className={className}>
 
         <form onSubmit={e => e.preventDefault()}>
             < LabeledInput
+                className={'my-4'}
                 disabled={lockUsername}
                 id={'signup-form-username'}
                 onChange={onChange}
@@ -24,7 +31,11 @@ const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [for
                 label={'Username'}
                 name={'username'}
             />
+
+
             <LabeledInput
+                className={'my-4'}
+
                 id={'signup-form-password'}
                 onChange={onChange}
                 value={form.password}
@@ -33,6 +44,7 @@ const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [for
                 type={'password'}
             />
             <LabeledInput
+                className={'my-4'}
                 id={'signup-form-firstName'}
                 onChange={onChange}
                 value={form.firstName}
@@ -40,6 +52,7 @@ const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [for
                 name={'firstName'}
             />
             <LabeledInput
+                className={'my-4'}
                 id={'signup-form-lastName'}
                 onChange={onChange}
                 value={form.lastName}
@@ -47,6 +60,7 @@ const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [for
                 name={'lastName'}
             />
             <LabeledInput
+                className={'my-4'}
                 id={'signup-form-email'}
                 onChange={onChange}
                 value={form.email}
@@ -54,8 +68,11 @@ const UserDetailsForm = ({lockUsername = false, buttonText, onSubmit, form: [for
                 type={'email'}
                 name={'email'}
             />
-            <FormButton onClick={onSubmit} text={buttonText}/>
+            <div
+                className={'my-4'}>
+            <FormButton  onClick={onSubmit} text={buttonText}/>
+            </div>
         </form>
-    </>
+    </div>
 
 export default UserDetailsForm

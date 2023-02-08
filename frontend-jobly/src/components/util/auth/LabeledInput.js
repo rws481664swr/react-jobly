@@ -1,8 +1,8 @@
-const LabeledInput=({label,type='text',id,value,onChange,name,...input_props})=>
-    <div>
+const LabeledInput=({className='',label,type='text',id,value,onChange,name,...input_props})=>
+    <div className={className}>
         <label htmlFor={id}>{label}</label>
         <input
-            className={`form-control`}
+            className={`form-control `}
             type={type}
             id={id}
             value={value}
