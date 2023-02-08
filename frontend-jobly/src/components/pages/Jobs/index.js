@@ -2,7 +2,6 @@ import './Jobs.css'
 import useAxiosGet from "../../../hooks/ajax/useAxiosGet";
 import JoblyApi from "../../../JoblyApi";
 import JobList from "./JobList";
-import {ListWrapper} from "../../util/HelperDivs";
 import JobFilters from "../../filters/JobFilters";
 
 

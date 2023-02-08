@@ -4,16 +4,20 @@ import JoblyApi from "../../../JoblyApi";
 import JobList from "../Jobs/JobList";
 import CompanyItem from './CompanyItem'
 import JobFilters from "../../filters/JobFilters";
+import {useParams} from "react-router-dom";
 
 
 const Company = ({...props}) => {
-    const comp = useAxiosGet(JoblyApi.getCompany, 'handle')
-    const [jobs, setQuery] = useAxiosGet(JoblyApi.getJobs)
-    if (!comp) return <></>
+    const {handle}=useParams()
+    const [company,setQuery] = useAxiosGet(JoblyApi.getCompany, handle)
+    // const [jobs, setQuery] = useAxiosGet(JoblyApi.getCompanyJobs,undefined,[])
+
+    if (!company) return <></>
+    const{jobs}=company
     return <>
-        <CompanyItem company={comp}/>
+        <CompanyItem company={company}/>
         <JobFilters setQuery={setQuery}/>
-        <JobList jobs={jobs.filter(j=> j.companyHandle===comp.handle)}/>
+        <JobList jobs={jobs}/>
     </>
 }
 export default Company
