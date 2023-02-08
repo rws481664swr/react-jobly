@@ -8,7 +8,6 @@ const JobFilters = ({setQuery}) => {
         setMinSalary("")
         setQuery({})
     }
-
     const updateSearch = () => {
         const query = {}
         if (minSalary) {

@@ -36,6 +36,7 @@ class JoblyApi {
         const response= await JoblyApi.request(`users/${username}`,body,'patch')
         return response.user;
     };
+
     static async request(endpoint, data = {}, method = "get") {
         console.debug("API Call:", endpoint, data, method);
 
@@ -76,6 +77,7 @@ class JoblyApi {
         let res = await JoblyApi.request(`companies`,query);
         return res.companies;
     }
+
 
     /** Get details on a company by handle. */
     static async getCompany(handle) {
