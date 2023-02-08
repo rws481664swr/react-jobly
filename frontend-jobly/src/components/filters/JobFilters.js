@@ -1,5 +1,8 @@
 import {useState} from "react";
 import './JobFilters.css'
+import LabeledInput from "../util/auth/LabeledInput";
+import {Flex} from "../util/HelperDivs";
+import Filter, {input} from "./Filter";
 const JobFilters = ({setQuery}) => {
     const [[minSalary, setMinSalary], [equity, setEquity], [search, setSearch]] = [useState(undefined), useState(undefined), useState(undefined)]
     const clear= ()=> {
@@ -22,25 +25,17 @@ const JobFilters = ({setQuery}) => {
         setQuery(query)
 
     }
+    const setMinSalaryChange = e=>setMinSalary(e.target.value)
+    const setEquityChange = e=>setEquity(e.target.checked)
+    const setSearchChange = e=>setSearch(e.target.value)
 
-    return <>
-        <form id='job-filters-form' className={'form-control d-flex justify-content-between'} onSubmit={(e) => e.preventDefault()}>
-            <div className={''}>
-                <label htmlFor="min-salary" placeholder={'Min Salary'}>Min Salary</label>
-                <input onChange={e => setMinSalary(e.target.value)} value={minSalary} id="min-salary" type="number"/>
-            </div>
-            <div className={''}>
-                <label htmlFor="min-hasEquity">Has Equity</label>
-                <input id="min-hasEquity" onChange={e => setEquity(e.target.checked)} value={equity}  type="checkbox"/>
-            </div>
-            <div className={' '}>
-                <label htmlFor="search">Search</label>
-                <input id={'search'} onChange={e => setSearch(e.target.value)} value={search} type={'text'} placeholder={'Search'}/>
-            </div>
-            <button onClick={clear} type="button" className={'btn btn-dark'}>Clear Filters</button>
-            <button onClick={updateSearch} type="submit" className={'btn btn-primary'}>Update Search</button>
-        </form>
-    </>
+
+    const inputs=[
+        input('min-salary',setMinSalaryChange,minSalary,'number',"Min Salary","Min Salary"),
+        input('has-equity',setEquityChange,equity,'checkbox',"Has Equity","Has Equity"),
+        input('form-search',setSearchChange,search,'text','Search for Jobs','Search for Jobs')
+    ]
+    return <Filter clear={clear} inputs={inputs} formId={'job-filters-form'} update={updateSearch}/>
 }
 
 export default JobFilters

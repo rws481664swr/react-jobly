@@ -11,6 +11,7 @@ import FlashComponent from '../../util/FlashComponent'
 import useToggle from "../../../hooks/state/useToggle";
 import Card from '../../common/Card.js'
 import useGetByID from '../../../hooks/ajax/useGetByID'
+import ProfileItem from "./ProfileItem";
 const profileInit = {
     username: '',
     firstName: '',
@@ -19,11 +20,7 @@ const profileInit = {
     email: '',
 }
 
-const ProfileItem = ({className = '', heading, data}) =>
-    <div className={` ${className}`}>
-        <h5>{heading}</h5>
-        <p>{data}</p>
-    </div>
+
 
 const Profile = () => {
     const {token} = useGlobalContext()
@@ -40,7 +37,7 @@ const Profile = () => {
         e.preventDefault()
         try {
             const {jobs, username: u, isAdmin, applications, ...toSubmit} = form
-            const data = await JoblyApi.updateUser(username, toSubmit)
+            await JoblyApi.updateUser(username, toSubmit)
         } catch (err) {
             console.log(err)
             flash(err)
@@ -74,24 +71,18 @@ const Profile = () => {
                     className={'my-3 mx-4'}
                     lockUsername={true}
                     buttonText={'Update'}
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
+                        await onSubmit(e)
                         toggleEdit();
-                        onSubmit(e)
                     }}
-                    form={[form, (e) => console.log('onChange: ', e) || onChange(e), clear]}
+                    form={[form, onChange, clear]}
 
                 />}
             </Card>
 
-            {editing &&
-                <></>}
-            {!editing && <>
-
-            </>}
         </ListWrapper>
     </>
 }
-const ProfileCard = ({profile}) => <></>
 
 
 export default Profile

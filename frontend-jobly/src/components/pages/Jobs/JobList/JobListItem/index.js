@@ -1,22 +1,23 @@
 import './JobListItem.css'
 import {Link} from "react-router-dom";
 import {Flex} from "../../../../util/HelperDivs";
+import Card from "../../../../common/Card";
 
-const JobListItem = ({className, job: {companyHandle, companyName, equity, id, salary, title}}) =>
-    <div className={`${className} JobCard-card`}>
+const JobListItem = ({className = '', job: {companyHandle, companyName, equity, id, salary, title}}) =>
+    <Card className={`${className}`}>
         <div className={"JobCard-title"}>
             <Flex className={'justify-content-between'}>
                 <div>
-            <span>{title}</span> at <Link className={'JobCard-card-link'}
-                                          to={`/companies/${companyHandle}`}>
-            {companyName}
-        </Link>
+                    <span>{title}</span> at <Link className={'JobCard-card-link'}
+                                                  to={`/companies/${companyHandle}`}>
+                    {companyName}
+                </Link>
                 </div>
-            <div>
-                <button className="btn btn-primary">Apply</button>
-            </div>
+                <div>
+                    <button className="btn btn-primary">Apply</button>
+                </div>
 
-    </Flex>
+            </Flex>
         </div>
         <div className={'JobCard-card-body'}>
 
@@ -28,7 +29,7 @@ const JobListItem = ({className, job: {companyHandle, companyName, equity, id, s
                             <>
                                 {/*{equity===null?'null':equity}*/}
                                 {/*{ && 'No Equity'}*/}
-                                {(!equity||equity==='0')?
+                                {(!equity || equity === '0') ?
                                     'No Equity'
                                     : (equity * 100).toFixed(2) + '%'}
                             </>
@@ -43,5 +44,5 @@ const JobListItem = ({className, job: {companyHandle, companyName, equity, id, s
             </div>
         </div>
 
-    </div>
+    </Card>
 export default JobListItem
