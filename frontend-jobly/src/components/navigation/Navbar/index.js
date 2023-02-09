@@ -44,6 +44,9 @@ const LoggedInNav = ({isAdmin, onLogout}) => <>
     <li className="nav-item">
         <NavLink className="nav-link" to="/profile">Profile</NavLink>
     </li>
+    {!isAdmin && <li className="nav-item">
+        <NavLink className="nav-link" to="/applications">Applications</NavLink>
+    </li>}
     {isAdmin &&
         <li className="nav-item">
             <NavLink className="nav-link" to="/admin">Admin</NavLink>
