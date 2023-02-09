@@ -7,7 +7,7 @@ const Filter= ({update,clear,inputs})=><>
         <Flex className={'justify-content-around'}>
             {inputs.map(({id,onChange,value,type,placeholder,label})=>
 
-                <Flex className={' '}>
+                <Flex key={id} className={' '}>
                     <label htmlFor={id}>{label}</label>
                     <input id={id} onChange={onChange} value={value} type={type} placeholder={''}/>
                 </Flex>
