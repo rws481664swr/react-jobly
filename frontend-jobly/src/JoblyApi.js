@@ -1,4 +1,5 @@
 import axios from "axios";
+import Job from "./components/pages/Job";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -62,10 +63,16 @@ class JoblyApi {
 
     /** get user by username */
     static async getUser(username) {
-        let res = await JoblyApi.request(`users/${username}`);
-        console.warn(res)
+        let res = await JoblyApi.request(`users/${username}`,{showCompany:true});
         return res.user;
     }
+
+    /** get job by id **/
+    static async getJob(id){
+        let res = await JoblyApi.request(`jobs/${id}`);
+        return res.job;
+    }
+
     /** get all jobs */
     static async getJobs(query={}) {
         let res = await JoblyApi.request(`jobs`, query);
@@ -85,6 +92,14 @@ class JoblyApi {
         return res.company;
     }
 
+    static async applyForJob(username, jobId) {
+       await JoblyApi.request(`users/${username}/jobs/${jobId}`,{},'post')
+    }
+
+    static async applications(username){
+        const  {jobs}= await JoblyApi.request(`users/${username}/jobs`)
+        return jobs
+    }
 }
 
 // for now, put token ("testuser" / "password" on class)
