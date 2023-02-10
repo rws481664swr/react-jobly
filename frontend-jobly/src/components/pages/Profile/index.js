@@ -12,6 +12,7 @@ import useToggle from "../../../hooks/state/useToggle";
 import Card from '../../common/Card.js'
 import ProfileItem from "./ProfileItem";
 import useAxiosGet from "../../../hooks/ajax/useAxiosGet";
+import useAxiosForm from '../../../hooks/ajax/useAxiosForm'
 const profileInit = {
     username: '',
     firstName: '',
@@ -25,13 +26,11 @@ const profileInit = {
 const Profile = () => {
     const {user:username} = useGlobalContext()
     const [message, flash] = useFlash()
-    const user = useAxiosGet(JoblyApi.getUser, username, {...profileInit, username})
-    const [editing, toggleEdit] = useToggle(false)
 
-    const [form, onChange, clear, setState] = useForm(user)
-    useEffect(() => {
-        setState(user)
-    }, [user])
+    const [editing, toggleEdit] = useToggle(false)
+    const [form, onChange, clear] =useAxiosForm(JoblyApi.getUser,username,{...profileInit,username})
+
+
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -55,11 +54,13 @@ const Profile = () => {
                             Edit
                         `</button>
                     </Flex>
-                    {[['Username', form.username],
+                    {[
+                        ['Username', form.username],
                         ['Name', `${form.firstName} ${form.lastName}`],
                         ['Email', form.email]]
                         .map(([heading, data]) =>
                             <ProfileItem
+                                key={data}
                                 className={'m-4'}
                                 heading={heading}
                                 data={data}
