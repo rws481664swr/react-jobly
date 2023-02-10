@@ -10,8 +10,8 @@ import useForm from "../../../hooks/forms/useForm";
 import FlashComponent from '../../util/FlashComponent'
 import useToggle from "../../../hooks/state/useToggle";
 import Card from '../../common/Card.js'
-import useGetByID from '../../../hooks/ajax/useGetByID'
 import ProfileItem from "./ProfileItem";
+import useAxiosGet from "../../../hooks/ajax/useAxiosGet";
 const profileInit = {
     username: '',
     firstName: '',
@@ -23,10 +23,9 @@ const profileInit = {
 
 
 const Profile = () => {
-    const {token} = useGlobalContext()
-    const {username} = decode(token)
+    const {user:username} = useGlobalContext()
     const [message, flash] = useFlash()
-    const user = useGetByID(JoblyApi.getUser, username, {...profileInit, username})
+    const user = useAxiosGet(JoblyApi.getUser, username, {...profileInit, username})
     const [editing, toggleEdit] = useToggle(false)
 
     const [form, onChange, clear, setState] = useForm(user)

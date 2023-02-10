@@ -10,7 +10,6 @@ import {useParams} from "react-router-dom";
 const Company = ({...props}) => {
     const {handle}=useParams()
     const [company,setQuery] = useAxiosGet(JoblyApi.getCompany, handle)
-    // const [jobs, setQuery] = useAxiosGet(JoblyApi.getCompanyJobs,undefined,[])
 
     if (!company) return <></>
     const{jobs}=company

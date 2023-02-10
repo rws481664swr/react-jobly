@@ -1,12 +1,12 @@
 import useGlobalContext from "../../../hooks/state/useGlobalContext";
-import useGetByID from "../../../hooks/ajax/useGetByID";
 import JoblyApi from "../../../JoblyApi";
 import {ListWrapper} from "../../util/HelperDivs";
 import JobListItem from "../Jobs/JobList/JobListItem";
+import useAxiosGet from "../../../hooks/ajax/useAxiosGet";
 
 const Applications = () => {
     const {user: username} = useGlobalContext()
-    const {jobs} = useGetByID(JoblyApi.getUser, username, {jobs: []})
+    const {jobs} = useAxiosGet(JoblyApi.getUser, username, {jobs: []})
 
     return <>
         <ListWrapper>
@@ -15,7 +15,7 @@ const Applications = () => {
     </>
 }
 const AsyncJobListItem = ({id}) => {
-    const job = useGetByID(JoblyApi.getJob, id)
+    const job = useAxiosGet(JoblyApi.getJob, id)
     if (!job) return <></>
     return <JobListItem applied={true} job={job} className={''}/>
 
