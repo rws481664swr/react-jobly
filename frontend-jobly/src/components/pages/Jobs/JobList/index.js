@@ -9,18 +9,22 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import FlashComponent from "../../../util/FlashComponent";
 import {useFlash} from "../../../../hooks/forms/useOnPostForm";
 
+
 const JobList = ({className = ''}) => {
     const {user: username} = useGlobalContext()
-    const appliedForIds = useRef(new Set())
+
+    const [applied, setApplied] = useState(() => new Set())
     const [query, setQuery] = useState({})
+    const [companies, setCompanies] = useState({})
     const [jobs, setJobs] = useState([])
     const [message, flash] = useFlash()
 
     const apply = useCallback(async (id) => {
         try {
             await JoblyApi.applyForJob(username, id)
-            appliedForIds.current.add(id)
-            setJobs(jobs => jobs.filter(e => e.id !== id))
+            setApplied(() =>
+                new Set([id, ...applied.values()])
+            )
         } catch (e) {
             flash(e)
             console.error(e)
@@ -31,13 +35,17 @@ const JobList = ({className = ''}) => {
     useEffect(
         () => {
             (async () => {
-                const [jobs, user] = await Promise.all([
+                const [jobs, user,companies] = await Promise.all([
                     JoblyApi.getJobs(query),
-                    JoblyApi.getUser(username)
+                    JoblyApi.getUser(username),
+                    JoblyApi.getCompanies()
                 ])
-                user.jobs.forEach(e => appliedForIds.current.add(e))
+                const companyMap= companies
+                    .map(({handle,name})=>({[handle]:name}))
+                    .reduce((e,r)=>({...e,...r}))
+                setCompanies(companyMap)
+                setApplied(new Set(user.jobs))
                 setJobs(jobs)
-                setJobs(j=>j.filter(e => !appliedForIds.current.has(e.id)))
             })()
         },
         [query]
@@ -49,11 +57,14 @@ const JobList = ({className = ''}) => {
         <JobFilters setQuery={setQuery}/>
         <ListWrapper>
             {jobs.map(
-                (j) => <>
-                    {j.id}
-                    <JobListItem applied={appliedForIds.current.has(j.id)} apply={()=>apply(j.id)} className={``} key={j.id}
-                                    job={j}/>
-                </>)}
+                (j) =>
+                    <JobListItem companyHandle={companies[j.companyHandle]}
+                                applied={applied.has(j.id)}
+                                 apply={() => apply(j.id)}
+                                 className={``}
+                                 key={j.id}
+                                 job={j}/>
+            )}
 
 
         </ListWrapper>

@@ -10,9 +10,8 @@ const JobCardTitle = ({companyName, companyHandle, applied, title, apply}) =>
                 {companyName}
             </Link>
             </div>
-            {!applied && <div>
-                <button onClick={apply} className="btn btn-primary">Apply</button>
-            </div>}
+            {!applied && <div> <button onClick={apply} className="btn btn-primary">Apply</button></div>}
+            {applied && <div>Applied</div>}
 
         </Flex>
     </div>
