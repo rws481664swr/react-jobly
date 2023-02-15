@@ -23,7 +23,7 @@ const Signup = (props) => {
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
-            const token = await JoblyApi.signup(form)
+            const token = await JoblyApi.signup(form[0])
             setToken(token)
             navigate('/')
         } catch (err) {

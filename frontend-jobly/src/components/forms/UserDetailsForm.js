@@ -21,7 +21,10 @@ const UserDetailsForm = ({
                          }) =>
     <div className={className}>
 
-        <form onSubmit={e => e.preventDefault()}>
+        <form onSubmit={e => {
+            onSubmit(e)
+            e.preventDefault()
+        }}>
             < LabeledInput
                 className={'my-4'}
                 disabled={lockUsername}
@@ -70,7 +73,7 @@ const UserDetailsForm = ({
             />
             <div
                 className={'my-4'}>
-            <FormButton  onClick={onSubmit} text={buttonText}/>
+            <FormButton text={buttonText}/>
             </div>
         </form>
     </div>
