@@ -1,0 +1,8 @@
+#CenterMessage {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+#CenterMessage_content{
+    text-align: center;
+}
