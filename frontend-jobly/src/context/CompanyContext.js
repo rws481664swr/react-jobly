@@ -18,7 +18,7 @@ export const CompanyContextProvider = ({prePopulate, children}) => {
                     .reduce((e, r) => ({...e, ...r})))
         })()
 
-    }, [])
+    }, [prePopulate])
 
 
     return <>
@@ -28,29 +28,3 @@ export const CompanyContextProvider = ({prePopulate, children}) => {
     </>
 }
 export const useCompanyContext = () => useContext(CompanyContext)
-/*
-
-const CompanyContext = createContext({})
-export const CompanyContextProvider = ({children}) => {
-    const [state,updateCompanies]= useToggle()
-    const [companies, setState] = useState({})
-    const setCompanies = (companiesList) =>
-        setState(
-            companiesList
-                .map(({name, handle}) => ({[handle]: name}))
-                .reduce((e, r) => ({...e, ...r})))
-    useEffect(() => {
-        (async () => {
-            const companies = await JoblyApi.getCompanies()
-            setState(companies)
-        })()
-    }, [state])
-    return <CompanyContext.Provider value={{companies, setCompanies,updateCompanies}}>
-        {children}
-    </CompanyContext.Provider>
-}
-
-export const useCompanyContext = () => useContext(CompanyContext)
-
-export default CompanyContext
-*/

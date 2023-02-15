@@ -5,7 +5,7 @@ import useGlobalContext from "../../../../hooks/state/useGlobalContext";
 import JoblyApi from "../../../../JoblyApi";
 
 import JobFilters from "../../../filters/JobFilters";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import FlashComponent from "../../../util/FlashComponent";
 import {useFlash} from "../../../../hooks/forms/useOnPostForm";
 
@@ -19,7 +19,7 @@ const JobList = ({className = ''}) => {
     const [jobs, setJobs] = useState([])
     const [message, flash] = useFlash()
 
-    const apply = useCallback(async (id) => {
+    const apply = async (id) => {
         try {
             await JoblyApi.applyForJob(username, id)
             setApplied(() =>
@@ -29,26 +29,32 @@ const JobList = ({className = ''}) => {
             flash(e)
             console.error(e)
         }
-    }, []);
+    }
 
+    useEffect(() => {
+        (async () => {
+            console.debug('get')
+            const companies = await JoblyApi.getCompanies()
+            const companyMap = companies
+                .map(({handle, name}) => ({[handle]: name}))
+                .reduce((e, r) => ({...e, ...r}))
+            setCompanies(companyMap)
 
+        })()
+    }, [])
     useEffect(
         () => {
             (async () => {
-                const [jobs, user,companies] = await Promise.all([
+                const [jobs, user] = await Promise.all([
                     JoblyApi.getJobs(query),
-                    JoblyApi.getUser(username),
-                    JoblyApi.getCompanies()
+                    JoblyApi.getUser(username)
+
                 ])
-                const companyMap= companies
-                    .map(({handle,name})=>({[handle]:name}))
-                    .reduce((e,r)=>({...e,...r}))
-                setCompanies(companyMap)
-                setApplied(new Set(user.jobs))
+                setApplied(new Set(user.applications))
                 setJobs(jobs)
             })()
         },
-        [query]
+        [query, username]
     )
 
 
@@ -59,7 +65,7 @@ const JobList = ({className = ''}) => {
             {jobs.map(
                 (j) =>
                     <JobListItem companyHandle={companies[j.companyHandle]}
-                                applied={applied.has(j.id)}
+                                 applied={applied.has(j.id)}
                                  apply={() => apply(j.id)}
                                  className={``}
                                  key={j.id}

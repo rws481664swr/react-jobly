@@ -12,7 +12,7 @@ const useAxiosGet = (func,id,defaultValue=null) => {
 
                 setState(data)
         })()
-    }, [query])
+    },  [query,func,id])
     return [state,setQuery]
 }
 export default useAxiosGet
